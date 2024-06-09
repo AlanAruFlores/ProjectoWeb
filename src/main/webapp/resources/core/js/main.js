@@ -31,6 +31,21 @@ document.addEventListener("click",(e)=>{
     if(e.target.matches(".boton__propiedades__cerrar") || e.target.matches(".boton__propiedades__cerrar *"))
         cerrarVentana(".ventana__propiedades");
 
+<<<<<<< HEAD
+=======
+
+    /*EVENTOS PARA LA VISTA PARTIDA*/
+    if(e.target.matches("#crear__partida__boton") || e.target.matches("#crear__partida__boton *"))
+        abrirVentana("#crear__partida__ventana");
+    if(e.target.matches("#cerrar__partida__ventana") || e.target.matches("#cerrar__partida__ventana *"))
+        cerrarVentana("#crear__partida__ventana");
+
+    /*Cerramos la ventana emergente con el mensaje especifico*/
+    if(e.target.matches("#mensaje_boton") || e.target.matches("#mensaje_boton *"))
+        cerrarVentana("#ventana__mensaje");
+
+
+>>>>>>> 33e48c0f1dbd8bcde808005a43bf08027c1274e4
     if(e.target.matches(".boton__musica") || e.target.matches(".boton__musica *")){
         let $iconAudio = document.querySelector(".boton__musica i");
         console.log($iconAudio);

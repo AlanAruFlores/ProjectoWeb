@@ -2,8 +2,14 @@
 INSERT INTO usuario (id,nombre,apellido,email,password,victorias,nombreUsuario) VALUES(1,"usuario","usuario","usuario@gmail.com","usuario1234",0,"UsuarioNombre1");
 INSERT INTO usuario (id,nombre,apellido,email,password,victorias,nombreUsuario) VALUES(2,"karl","karl","karl@gmail.com","karl1234",0,"karlos");
 INSERT INTO usuario (id,nombre,apellido,email,password,victorias,nombreUsuario) VALUES(3,"juan","juan","juan@gmail.com","juan1234",0,"juanceto07");
+<<<<<<< HEAD
 /*INSERT DE UN JUGADOR POR DEFECTO*/
 INSERT INTO jugador(usuario_id,posicionCasilla,saldo) VALUES (1,1,1000);
+=======
+
+/*INSERT PARTIDA (PRUEBA)*/
+/*INSERT INTO partida(id,estadoPartida,fechaApertura,nombre,numeroJugadores,creador_id,turnoJugador_id) values (1,"ABIERTA",CURDATE(),"ASDpartida",3,1,1);*/
+>>>>>>> 33e48c0f1dbd8bcde808005a43bf08027c1274e4
 
 /*INSERCION DE LAS PROPIEDADES (no eliminar)*/
 /*CASAS CELESTES Y SU TREN*/

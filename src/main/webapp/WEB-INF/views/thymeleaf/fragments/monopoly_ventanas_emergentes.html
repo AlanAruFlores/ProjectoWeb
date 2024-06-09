@@ -11,8 +11,13 @@
         <img class="ventana__imagen" th:src="@{${propiedad.imagen}}" alt="propiedad">
         <p class="ventana__parrafo" th:text="'Precio:$'+${propiedad.precio}"></p>
         <div class="ventana__botones">
+<<<<<<< HEAD
             <a th:href="@{/adquirirPropiedad}" class="ventana__boton">Comprar</a>
             <a class="ventana__boton cancelar_propiedad_boton">Cancelar</a>
+=======
+            <a th:href="@{/adquirirPropiedad(idPartida=${partidaEnJuego.id}, idPropiedad=${propiedad.id})}" class="ventana__boton">Comprar</a>
+            <a class="ventana__boton cancelar_propiedad_boton aceptar_boton">Cancelar</a>
+>>>>>>> 33e48c0f1dbd8bcde808005a43bf08027c1274e4
         </div>
     </div>
 

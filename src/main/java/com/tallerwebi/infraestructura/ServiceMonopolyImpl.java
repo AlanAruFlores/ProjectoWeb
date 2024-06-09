@@ -52,6 +52,7 @@ public class ServiceMonopolyImpl implements ServicioMonopoly {
         //Obtengo el jugador
         Jugador jugador = (Jugador) session.getAttribute("jugador");
 
+<<<<<<< HEAD
         session.setAttribute("dado",mapaDado.get(numeroRandom));
         /*Actualizo posicion*/
         Integer posicionJugador;
@@ -64,6 +65,11 @@ public class ServiceMonopolyImpl implements ServicioMonopoly {
         //Actualizo la posicion
         this.repositorioJugador.actualizar(jugador);
         session.setAttribute("jugador", jugador);
+=======
+        /*Hago el cambio de turno*/
+        int ordenTurnoActual = usuarioJugandoALaMismaPartida.indexOf(partidaUsuario);
+        int siguienteTurno = (ordenTurnoActual + 1) % usuarioJugandoALaMismaPartida.size();
+>>>>>>> 33e48c0f1dbd8bcde808005a43bf08027c1274e4
 
         //Agrego propiedad
         Propiedad propiedadEncontrada = repositorioPropiedad.obtenerPropiedadPorNroCasillero(numeroRandom);
