@@ -60,7 +60,8 @@
             <p>Universidad Nacional de la Matanza</p>
         </div>
     </footer>
-    <script type="text/javascript" th:src="@{../../../resources/core/js/popup.js}"></script>
+
+    <script type="text/javascript" th:src="@{/js/popup.js}"></script>
     <script>
         var popupOverlay = document.getElementById("popup-overlay");
         // Función para abrir el popup
@@ -86,7 +87,6 @@
         if (urlContains("volver-login")) {
             openPopup();
         }
-
 
     </script>
 </body>

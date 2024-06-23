@@ -48,7 +48,7 @@ public class ServicioPerfilImplTest {
         datosPerfil.setEmail("emailValido");
         datosPerfil.setContraseniaNueva("corta");
 
-        when(session.getAttribute("usuarioActual")).thenReturn(usuarioActual);
+        when(session.getAttribute("usuarioLogeado")).thenReturn(usuarioActual);
 
         assertThrows(ContraseniaInvalidaException.class, () -> servicioPerfil.actualizarPerfil(datosPerfil, session));
     }
@@ -64,7 +64,7 @@ public class ServicioPerfilImplTest {
         datosPerfil.setContraseniaNueva("nuevaContrasenia");
         datosPerfil.setRepiteContraseniaNueva("diferenteContrasenia");
 
-        when(session.getAttribute("usuarioActual")).thenReturn(usuarioActual);
+        when(session.getAttribute("usuarioLogeado")).thenReturn(usuarioActual);
 
         assertThrows(ContraseniaInvalidaException.class, () -> servicioPerfil.actualizarPerfil(datosPerfil, session));
     }
@@ -79,7 +79,7 @@ public class ServicioPerfilImplTest {
         datosPerfil.setContraseniaActual("");
         datosPerfil.setEmail("");
 
-        when(session.getAttribute("usuarioActual")).thenReturn(usuarioActual);
+        when(session.getAttribute("usuarioLogeado")).thenReturn(usuarioActual);
 
         assertThrows(CamposVaciosException.class, () -> servicioPerfil.actualizarPerfil(datosPerfil, session));
     }

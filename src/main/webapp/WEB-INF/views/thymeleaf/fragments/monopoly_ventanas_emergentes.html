@@ -6,30 +6,34 @@
 </head>
 <body>
 <div th:fragment="tablero_ventanas_emergentes">
+    <!--Ventana cuando tira el jugador-->
+    <div th:if="${dado} and ${propiedad == null} and ${pagarMensaje == null} and ${bancarrota == null}" class="ventana__emergente dado__ventana">
+        <h1 class="ventana__titulo">El Jugador 1 tiro el dado!!</h1>
+        <img th:src="@{${dado}}" alt="dado" class="ventana__imagen imagen__dado">
+        <a id="aceptar_dado" class="ventana__boton aceptar_boton">Aceptar</a>
+    </div>
+
     <div th:if="${propiedad != null}" class="ventana__emergente comprar_propiedad_servicio">
-        <h1 class="ventana__titulo" th:text="${propiedad.nombre}+' Disponible !!'"> </h1>
+        <h1 class="ventana__titulo">El Jugador 1 tiro el dado!!</h1>
+        <img th:src="@{${dado}}" alt="dado" class="ventana__imagen imagen__dado">
+        <h2 class="" th:text="${propiedad.nombre}+' Disponible !!'"> </h2>
         <img class="ventana__imagen" th:src="@{${propiedad.imagen}}" alt="propiedad">
         <p class="ventana__parrafo" th:text="'Precio:$'+${propiedad.precio}"></p>
         <div class="ventana__botones">
-<<<<<<< HEAD
-            <a th:href="@{/adquirirPropiedad}" class="ventana__boton">Comprar</a>
-            <a class="ventana__boton cancelar_propiedad_boton">Cancelar</a>
-=======
-            <a th:href="@{/adquirirPropiedad(idPartida=${partidaEnJuego.id}, idPropiedad=${propiedad.id})}" class="ventana__boton">Comprar</a>
+            <a  id="adquirir__boton" class="ventana__boton">Comprar</a>
             <a class="ventana__boton cancelar_propiedad_boton aceptar_boton">Cancelar</a>
->>>>>>> 33e48c0f1dbd8bcde808005a43bf08027c1274e4
         </div>
     </div>
 
-    <div class="ventana__emergente pagar">
-        <h1 class="ventana__titulo">JUGADOR 1 CAYO EN UNA PROPIEDAD!!</h1>
+<!--Ventana para mostrar el pago -->
+    <div th:if="${pagarMensaje}" class="ventana__emergente pagar">
+        <h1 class="ventana__titulo" th:text="${pagarMensaje.descripcionQuienPaga}"></h1>
         <div class="ventana__imagenes">
-            <img class="ventana__imagen" th:src="@{/imagenes/monopolyman.png}" alt="propiedad">
-            <!--<img src="monopolyman.svg" alt="" class="ventana__imagen">-->
+            <img th:src="@{${dado}}" alt="dado" class="ventana__imagen imagen__dado">
+            <img class="ventana__imagen" th:src="@{/imagenes/monopolyman.svg}" alt="monopolyman">
         </div>
-
-        <p class="ventana__parrafo">DEBE PAGAR AL JUGADOR 2 $30 POR CAER EN SU PROPIEDAD</p>
-        <a class="ventana__boton">Aceptar</a>
+        <p class="ventana__parrafo" th:text="${pagarMensaje.descripcionQuienRecibe}"></p>
+        <a class="ventana__boton mensaje_boton aceptar_boton">Aceptar</a>
     </div>
 
     <!--Ventana del Chat-->
@@ -44,24 +48,24 @@
             <div class="chat__mensajes">
             </div>
             <div class="chat__input">
-                <input type="text" name="mensaje">
-                <button type="submit"><i class="fa-regular fa-message"></i></button>
+                <input type="text" name="mensaje" id="inputMensaje">
+                <button type="submit" id="enviarMensaje"><i class="fa-regular fa-message"></i></button>
             </div>
         </div>
-    </div>
-
-    <!--Ventana cuando tira el jugador-->
-    <div th:if="${dado}" class="ventana__emergente dado__ventana">
-        <h1 class="ventana__titulo">El Jugador 1 tiro el dado!!</h1>
-        <img th:src="@{${dado}}" alt="dado" class="ventana__imagen imagen__dado">
-        <a id="aceptar_dado" class="ventana__boton">Aceptar</a>
     </div>
 
     <!--Ventana para mensajes u errores -->
     <div th:if="${mensaje}" class="ventana__emergente ventana__mensaje">
         <h1 class="ventana__titulo" th:text="${mensaje}"></h1>
         <img class="ventana__imagen" th:src="@{/imagenes/monopolyman.svg}" alt="monopolyman">
-        <a id="mensaje_boton" class="ventana__boton boton__error">Aceptar</a>
+        <a class="ventana__boton boton__error mensaje_boton aceptar_boton">Aceptar</a>
+    </div>
+
+    <!--Ventana para mostrar la bancarrota-->
+    <div th:if="${bancarrota}" class="ventana__emergente ventana__mensaje">
+        <h1 class="ventana__titulo" th:text="${bancarrota}"></h1>
+        <img class="ventana__imagen" th:src="@{/imagenes/monopolyman.svg}" alt="monopolyman">
+        <a class="ventana__boton boton__error mensaje_boton volver_boton">Regresar</a>
     </div>
 
     <!--Ventana para ver propiedades de un jugador -->
@@ -73,16 +77,35 @@
             <div class="propiedades__cabecera">
                 <h1>Mis Propiedades</h1>
             </div>
-            <div th:if="${!propiedades.isEmpty()}"  class="propiedades__contenedor">
-                <div th:each="propiedad:${propiedades}">
-                    <img  th:src="@{${propiedad.imagen}}" alt="propiedad">
+            <div th:if="${!usuarioPropiedadesActual.isEmpty()}"  class="propiedades__contenedor">
+                <div th:each="usuarioPropiedad:${usuarioPropiedadesActual}">
+                    <img th:src="@{${usuarioPropiedad.propiedad.imagen}}" alt="propiedad">
                 </div>
             </div>
-            <div th:if="${propiedades.isEmpty()}" class="propiedades__contenedor">
+            <div th:if="${usuarioPropiedadesActual.isEmpty()}" class="propiedades__contenedor">
                 <p class="propiedades__texto">No tiene propiedades</p>
             </div>
         </div>
     </div>
+
+    <div th:if="${usuarioActual.estadoActividad.name().equals('ACTIVO') && hayAlgunInactivo == true}" class="ventana__emergente ventana__usuario__desconectado">
+        <h1 class="ventana__titulo">Hay un usuario Desconectado</h1>
+        <img class="ventana__imagen" th:src="@{/imagenes/monopolyman.svg}" alt="monopolyman">
+        <p class="ventana__parrafo">Esperando a que el usuario se reconecte....</p>
+    </div>
+
+    <div th:if="${usuarioActual.estadoActividad.name().equals('INACTIVO')}" class="ventana__emergente ventana__usuario__desconectado">
+        <h1 class="ventana__titulo">Usted se desconecto</h1>
+        <img class="ventana__imagen" th:src="@{/imagenes/monopolyman.svg}" alt="monopolyman">
+        <a href="#" class="ventana__boton boton__reconectarse">Reconectarse</a>
+    </div>
+
+    <!--Ventana para mostrar TU TURNO-->
+    <!--Ventana para mensajes u errores
+    <div th:if="${partidaEnJuego.turnoJugador.id == usuarioActual.usuario.id}" class="ventana__emergente" id="ventana__tuturno">
+        <p class="ventana__parrafo" style="font-size:40px; text-align: center">TU TURNO !!</p>
+    </div>
+-->
 </div>
 </body>
 </html>

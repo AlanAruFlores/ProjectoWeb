@@ -29,7 +29,7 @@ public class ServicioPerfilImpl implements ServicioPerfil {
     @Override
     public void actualizarPerfil(DatosPerfil datosPerfil, HttpSession session) throws ContraseniaInvalidaException, EmailInvalidoException, CamposVaciosException {
         // Obtener el usuario actual de la sesión
-        Usuario usuarioActual = (Usuario) session.getAttribute("usuarioActual");
+        Usuario usuarioActual = (Usuario) session.getAttribute("usuarioLogeado");
         if (usuarioActual == null) {
             // Manejar el caso de que el usuario no esté autenticado
             throw new RuntimeException("Usuario no autenticado");

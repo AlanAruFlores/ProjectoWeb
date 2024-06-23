@@ -2,9 +2,11 @@ package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.excepcion.ExcesoDeJugadoresException;
+import com.tallerwebi.dominio.excepcion.UsuarioNoAutenticadoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -22,10 +24,20 @@ public class ServicioPartidaImpl implements ServicioPartida {
         this.repositorioPartidaUsuario = repositorioPartidaUsuario;
     }
 
-
     @Override
     public void crearUnaPartidaNueva(Partida partida) {
         this.repositorioPartida.crearPartida(partida);
+    }
+
+    @Override
+    public void actualizarEstadoDeUnaPartida(Partida partida, EstadoPartida estadoPartida) {
+        partida.setEstadoPartida(estadoPartida);
+        this.repositorioPartida.actualizarPartida(partida);
+    }
+
+    @Override
+    public Partida obtenerPartidaPorCreador(Usuario creador){
+        return this.repositorioPartida.obtenerPartidaPorCreador(creador);
     }
 
     @Override
@@ -59,7 +71,7 @@ public class ServicioPartidaImpl implements ServicioPartida {
             }
         }
 
-        PartidaUsuario nuevoUsuarioEnLaPartida = new PartidaUsuario(null,partidaAUnirse,usuario,1,1500.0,colorSeleccionado,null);
+        PartidaUsuario nuevoUsuarioEnLaPartida = new PartidaUsuario(null,partidaAUnirse,usuario,1,1500.0,colorSeleccionado,EstadoActividad.ACTIVO,null);
         this.repositorioPartidaUsuario.crearPartidaUsuario(nuevoUsuarioEnLaPartida);
     }
 
@@ -85,8 +97,11 @@ public class ServicioPartidaImpl implements ServicioPartida {
 
     @Override
     public void salirDeLaPartida(Long partidaId, Long usuarioId) {
-        this.repositorioPartidaUsuario.eliminarPartidaUsuarioPorPartidaIdYUsuarioId(partidaId,usuarioId);
+        this.repositorioPartidaUsuario.eliminarPartidaUsuario(partidaId,usuarioId);
     }
 
-
+    @Override
+    public PartidaUsuario verSiTieneUnaPartidaEnCursoPorUsuario(Usuario usuarioActual){
+        return this.repositorioPartidaUsuario.obtenerUsuarioPartidaPorUsuarioId(usuarioActual.getId());
+    }
 }

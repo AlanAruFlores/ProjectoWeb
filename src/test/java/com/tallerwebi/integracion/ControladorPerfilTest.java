@@ -43,7 +43,7 @@ public class ControladorPerfilTest {
         usuarioActual.setVictorias(10);
 
         // Mock de sesión
-        when(session.getAttribute("usuarioActual")).thenReturn(usuarioActual);
+        when(session.getAttribute("usuarioLogeado")).thenReturn(usuarioActual);
 
         // Llamada al método a probar
         ModelAndView modelAndView = controladorPerfil.irAlperfil(session);
@@ -63,7 +63,7 @@ public class ControladorPerfilTest {
         Usuario usuarioActual = new Usuario();
         usuarioActual.setId(1L);
         // Mock de sesión
-        when(session.getAttribute("usuarioActual")).thenReturn(usuarioActual);
+        when(session.getAttribute("usuarioLogeado")).thenReturn(usuarioActual);
         // Usuario devuelto por el servicio
         Usuario usuario = new Usuario();
         usuario.setNombre("NombreUsuario");
@@ -82,4 +82,3 @@ public class ControladorPerfilTest {
 
     // Agrega más tests según tus requerimientos
 }
-

@@ -3,6 +3,7 @@ package com.tallerwebi.presentacion;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.excepcion.ExcesoDeJugadoresException;
+import com.tallerwebi.dominio.excepcion.UsuarioNoAutenticadoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -32,11 +33,19 @@ public class ControladorPartida {
 
     /*Voy a la pantalla de partidas*/
     @RequestMapping(path="/partida", method=RequestMethod.GET)
-    public ModelAndView irPartida(){
+    public ModelAndView irPartida(HttpSession session){
+
+        /*Verifico si tiene alguna partida pendiente*/
+        PartidaUsuario partidaPendiente = this.servicioPartida.verSiTieneUnaPartidaEnCursoPorUsuario((Usuario) session.getAttribute("usuarioLogeado"));
+        if(partidaPendiente != null && partidaPendiente.getPartida().getEstadoPartida().equals(EstadoPartida.ABIERTA))
+            return new ModelAndView("redirect:/espera");
+        if(partidaPendiente != null && partidaPendiente.getPartida().getEstadoPartida().equals(EstadoPartida.EN_CURSO))
+            return new ModelAndView("redirect:/monopoly/?id="+partidaPendiente.getPartida().getId());
+
+
         ModelMap mp = new ModelMap();
         //Obtengo las partidas para mostrarlos a los jugadores
         List<Partida> partidasCreadas = this.servicioPartida.obtenerTodasLasPartidas();
-
         mp.put("partida", new Partida());
         mp.put("partidasCreadas",partidasCreadas);
         return new ModelAndView("partidas.html", mp);
@@ -78,6 +87,12 @@ public class ControladorPartida {
 
     @RequestMapping("/espera")
     public ModelAndView irSalaEspera(HttpSession session){
+
+        /*Verifico que no haya una partida pendiente . Y si hay lo redirige al monopoly automaticamente*/
+        PartidaUsuario partidaPendiente = this.servicioPartida.verSiTieneUnaPartidaEnCursoPorUsuario((Usuario) session.getAttribute("usuarioLogeado"));
+        if(partidaPendiente != null && partidaPendiente.getPartida().getEstadoPartida().equals(EstadoPartida.EN_CURSO))
+            return new ModelAndView("redirect:/monopoly/?id="+partidaPendiente.getPartida().getId());
+
         ModelMap mp = new ModelMap();
         Partida partidaEnJuego = (Partida) session.getAttribute("partidaEnJuego");
 

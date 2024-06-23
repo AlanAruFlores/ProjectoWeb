@@ -12,11 +12,11 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 
     private SessionFactory sessionFactory;
 
-   @Autowired
-   public RepositorioUsuarioImpl (SessionFactory sessionFactory) {
-       this.sessionFactory = sessionFactory;
+    @Autowired
+    public RepositorioUsuarioImpl (SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
 
-   }
+    }
 
     @Override
     public void guardar(Usuario usuario) {
@@ -50,6 +50,5 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
         Session session = sessionFactory.getCurrentSession();
         return session.get(Usuario.class, id);
     }
-
 
 }

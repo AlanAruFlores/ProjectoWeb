@@ -33,7 +33,7 @@ public class ControladorPerfil {
 
     @RequestMapping("/perfil")
     public ModelAndView irAlperfil(HttpSession session) {
-        Usuario usuarioActual = (Usuario) session.getAttribute("usuarioActual");
+        Usuario usuarioActual = (Usuario) session.getAttribute("usuarioLogeado");
         ModelMap model = new ModelMap();
         model.addAttribute("nombre", usuarioActual.getNombre());
         model.addAttribute("id", usuarioActual.getId());
@@ -44,7 +44,7 @@ public class ControladorPerfil {
 
     @RequestMapping("/editar-perfil")
     public ModelAndView editarPerfil(HttpSession session) {
-        Usuario usuarioActual = (Usuario) session.getAttribute("usuarioActual");
+        Usuario usuarioActual = (Usuario) session.getAttribute("usuarioLogeado");
         ModelMap mp = new ModelMap();
         Long userId = usuarioActual.getId();
         Usuario usuario = servicioPerfil.devolverUsuario(userId);
@@ -53,17 +53,12 @@ public class ControladorPerfil {
         datosPerfil.setEmail(usuario.getEmail());
         mp.put("datosPerfil", datosPerfil); // Usar datosPerfil con los valores iniciales
         return new ModelAndView("editarPerfil", mp);
-
-
-
     }
-
-
 
     @RequestMapping(path = "/editar-perfil", method = RequestMethod.POST)
     public ModelAndView actualizarPerfil(@ModelAttribute("datosPerfil") DatosPerfil datosPerfil,HttpSession session) {
         ModelMap model = new ModelMap();
-        Usuario usuarioActual = (Usuario) session.getAttribute("usuarioActual");
+        Usuario usuarioActual = (Usuario) session.getAttribute("usuarioLogeado");
         try {
             servicioPerfil.actualizarPerfil(datosPerfil,session);
             model.put("mensaje", "Perfil actualizado exitosamente");
@@ -88,10 +83,4 @@ public class ControladorPerfil {
 
         return new ModelAndView("editarPerfil", model);
     }
-
-
-
-
-
-
 }
