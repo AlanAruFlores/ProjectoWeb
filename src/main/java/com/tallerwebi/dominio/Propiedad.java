@@ -13,6 +13,7 @@ public class Propiedad {
     private Integer precio;
     private Boolean disponibilidad;
     private Integer nroCasilla;
+    private String color;
 
     @ManyToOne
     private Jugador propietario;

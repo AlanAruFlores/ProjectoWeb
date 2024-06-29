@@ -6,9 +6,16 @@
 </head>
 <body>
     <div th:fragment="tablero_perfiles">
+<<<<<<< HEAD
         <div class="perfil">
             <img th:src="@{imagenes/foto_perfil.jpg}" alt="foto" class="perfil__foto">
             <p th:text="${jugador.usuario.nombreUsuario}+':$'+${jugador.saldo}"></p>
+=======
+        <div class="perfil" th:style="'background-color:' + ${usuarioActual.colorUsuario.getCodigoHexadecimal()} + ';'">
+            <img th:src="@{${usuarioActual.usuario.imagenPerfil}}" alt="foto" class="perfil__foto">
+
+            <p th:text="${usuarioActual.usuario.nombreUsuario}+':$'+${usuarioActual.saldo}"></p>
+>>>>>>> 57d9088b7d73d8b2649fb9b015a9cc0f9794debe
         </div>
 
     </div>

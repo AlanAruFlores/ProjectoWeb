@@ -25,14 +25,20 @@ public class Usuario {
     private String repitePassword;
     private String nombreUsuario;
     private Integer victorias;
+    private String imagenPerfil;
+    public Boolean baneado;
 
-    public Usuario(String nombre, String email, String password, String apellido, String nombreUsuario, String repitePassword) {
+    public Usuario(String nombre, String email, String password, String apellido,
+                   String nombreUsuario, String repitePassword) {
         this.nombre = nombre;
         this.email = email;
         this.password = password;
         this.apellido = apellido;
         this.nombreUsuario = nombreUsuario;
         this.repitePassword = repitePassword;
+        this.victorias = 0;
+        this.imagenPerfil = "/imagenes/fotosPerfil/perfil1.png";
+        this.baneado = false;
     }
 
     @Override
@@ -47,4 +53,7 @@ public class Usuario {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
+    public void setEsAdmin(boolean b) {}
+
 }

@@ -78,4 +78,8 @@ public class DatosPerfil {
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 57d9088b7d73d8b2649fb9b015a9cc0f9794debe
